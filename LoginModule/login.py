@@ -1,36 +1,20 @@
-from selenium import webdriver
-import os
+# coding:utf-8
 import time
 
-from selenium.webdriver.common.by import By
+from LoginModule.base import BaseWebdriver, ConfigParser
 
-from LoginModule.base import drivers
+driver = BaseWebdriver()
+config = ConfigParser()
+driver.get(config.get_start_url('start_url'))
+driver.element(config.get_element('login_index')).click()
+time.sleep(2)
+driver.element(config.get_element('account_button')).click()
+driver.element(config.get_element('user_name')).send_keys(config.get_user_info('username'))
+driver.element(config.get_element('user_pass')).send_keys(config.get_user_info('password'))
 
-
-#
-# def element(name):
-#     if driver.find_element_by_class_name(name):
-#         return driver.find_element_by_class_name(name)
-#     elif driver.find_element_by_xpath(name):
-#         print(222)
-#         return driver.find_element_by_xpath(name)
-
-def element(name):
-    # by_list = ['By.ID', 'By.CLASS_NAME']
-    f = driver.find_elements(By.CLASS_NAME,name)
-    print(f)
+print(config.get_element('login_button'))
+# driver.element(ConfigParser().get_element('login_button')).click()
+print(type('//button[text()="登录"]'))
+driver.element('//button[text()="登录"]').click()
 
 
-driver = drivers()
-driver.get('https://www.csdn.net/')
-
-element('userinfo')
-
-# time.sleep(2)
-# element('//*[@id="app"]/div/div/div[1]/div[2]/div[5]/ul/li[2]/a')
-
-# driver.find_element_by_xpath('//*[@id="app"]/div/div/div[1]/div[2]/div[5]/ul/li[2]/a').click()
-# print(driver)
-# driver.find_element_by_name('all').send_keys('chongqing115@126.com')
-# driver.find_element_by_name('pwd').send_keys('123qweasdzxc')
-# driver.find_element_by_xpath('//*[@id="app"]/div/div/div[1]/div[2]/div[5]/div/div[6]/div/button').click()
