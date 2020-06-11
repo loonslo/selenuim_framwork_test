@@ -1,8 +1,9 @@
 # encoding:utf-8
-from selenium import webdriver
-import time
 import configparser
 import os
+
+from selenium import webdriver
+from datetime import datetime
 
 
 class BaseWebdriver(object):
@@ -19,7 +20,6 @@ class BaseWebdriver(object):
     def element(self, name):
         for by in self.by_list:
             if self.driver.find_elements(by, name):
-                # print(by)
                 return self.driver.find_element(by, name)
 
     def is_exist(self, name):
@@ -30,7 +30,8 @@ class BaseWebdriver(object):
         return False
 
     def get_screenshot(self):
-        self.driver.save_screenshot('1.png')
+        time = datetime.now().strftime('%Y%m%d%H%M%S')
+        self.driver.save_screenshot(time + '.png')
 
 
 class ConfigParser(object):
@@ -42,9 +43,6 @@ class ConfigParser(object):
 
     def get_element(self, option):
         return self.config.get('Element', option)
-        # string = self.config.get('element', option)
-        # r = string.split('>')
-        # print(r)
 
     def get_start_url(self, option):
         return self.config.get('Start_url', option)
